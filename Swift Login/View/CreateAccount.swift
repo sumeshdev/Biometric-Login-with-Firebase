@@ -10,7 +10,6 @@ import SwiftUI
 import FirebaseAuth
 
 struct CreateAccount: View {
-    //@StateObject private var createVM = CreateViewModel()
     @State private var effects = false
     @EnvironmentObject var authentication : Authentication
     @Environment(\.presentationMode) var presentationMode
@@ -30,7 +29,6 @@ struct CreateAccount: View {
             }
             DispatchQueue.main.async {
                 self.authType = true
-                presentationMode.wrappedValue.dismiss()
             }
         }
     }
@@ -92,6 +90,11 @@ struct CreateAccount: View {
                         .padding(.top, 10)
                         .padding(.bottom, 10)
                         .background(Capsule()).foregroundColor(.white)
+                }).disabled(email.isEmpty && password.isEmpty)
+                .alert(isPresented: $authType, content: {
+                    Alert(title: Text("Successful"), message: Text("Your account successfully saved please login with your username and password"), dismissButton: .default(Text("OK"), action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }))
                 })
                 
                 
